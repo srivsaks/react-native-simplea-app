@@ -7,7 +7,15 @@ import GoalInput from './components/GoalInput';
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState("");
   const [courseGoals, setCourseGoals] = useState([]);
+  const[isModalVisible,setIsModalVisible] = useState(false);
 
+  function startAddGoalHandler(enteredText) {
+    setIsModalVisible(true)
+  }
+
+  function endAddGoalHandler() {
+    setIsModalVisible(false)
+  }
 
   function goalInputHandler(enteredText) {
     setEnteredGoalText(enteredText);
@@ -16,7 +24,7 @@ export default function App() {
   function addGoalHandler() {
     // setCourseGoals(prev=>[...prev,enteredGoalText])
     setCourseGoals(prev=>[...prev,{text:enteredGoalText,id:Math.random().toString()}])
-    setEnteredGoalText("");
+    setIsModalVisible(false)
   }
 
   function deleteGoalHandler(id){
@@ -29,11 +37,12 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
+      <Button title="Add New Goal" color="#5e0acc" onPress={startAddGoalHandler}/>
       {/* <View style={styles.inputContainer}>
         <TextInput style={styles.textInput} placeholder='Your course goal!' onChangeText={goalInputHandler} />
         <Button title="Add goal" onPress={addGoalHandler} />
       </View> */}
-      <GoalInput goalInputHandler={goalInputHandler} addGoalHandler={addGoalHandler}/>
+      {isModalVisible && <GoalInput goalInputHandler={goalInputHandler} addGoalHandler={addGoalHandler} isModalVisible={isModalVisible} closeModal={endAddGoalHandler}/>}
       <View style={styles.goalsContainer}>
         {/**Using flatList for optimisations */}
       <FlatList alwaysBounceVertical={false} data={courseGoals} renderItem={
@@ -43,7 +52,7 @@ export default function App() {
           //     {itemData.item.text}
           //   </Text>
           //   </View>
-          <GoalItem text={itemData.item.text} onDeleteItem={deleteGoalHandler} id={itemData.item.id}/>
+          <GoalItem text={itemData.item.text} onDeleteItem={deleteGoalHandler} id={itemData.item.id} />
         )
       }>
         {/* {courseGoals.map((item,index)=>{
