@@ -36,6 +36,8 @@ export default function App() {
   }
 
   return (
+    <>
+    <StatusBar style="light"/>
     <View style={styles.appContainer}>
       <Button title="Add New Goal" color="#5e0acc" onPress={startAddGoalHandler}/>
       {/* <View style={styles.inputContainer}>
@@ -68,6 +70,7 @@ export default function App() {
       </FlatList>
       </View>
     </View>
+    </>
   );
 }
 
@@ -75,7 +78,8 @@ const styles = StyleSheet.create({
   appContainer: {
     paddingTop: 50,
     paddingHorizontal: 16,
-    flex: 1
+    flex: 1,
+    backgroundColor:"#1e085a"
   },
   inputContainer: {
     flexDirection: "row",
